@@ -16,3 +16,7 @@ td {width: 50px;
 table,h1{
     margin-left:30% ;
 }
+h1{
+    color: rgb(255, 47, 182);
+    text-shadow: 1px 2px black;
+}
