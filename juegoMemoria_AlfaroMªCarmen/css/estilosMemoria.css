@@ -1,0 +1,31 @@
+h1 {
+    color: rgb(255, 47, 182);
+
+    text-shadow: 1px 2x black;
+}
+
+h2 {
+    color: rgb(249, 112, 201);
+
+}
+.cuerpo{
+   margin-left: 30%;
+}
+
+table,
+tr,
+td {
+    border: 2px solid rgb(255, 47, 182);
+    border-collapse: collapse;
+    background-color: rgb(252, 236, 243);
+
+
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    
+}
+
+
