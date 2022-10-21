@@ -4,7 +4,7 @@ h1 {
     text-shadow: 1px 2x black;
 }
 
-h2 {
+h2, p {
     color: rgb(249, 112, 201);
 
 }

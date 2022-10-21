@@ -1,19 +1,21 @@
+
 class Tablero {
+    //Definimos variables globales para usar en todo el código.
     filasUsuario = "";
     columnasUsuario = "";
+
     constructor() {
 
         this.saberColumnasyFilas();
         this.calcularSiEsPar();
         this.crearTablero();
-
         this.pintarTablero();
     }
 
 
 
     saberColumnasyFilas() {
-
+        //Método para preguntar al usuario las filas y columnas que desee para formar el tablero
         this.filasUsuario = parseInt(prompt('¿Cuántas filas quieres?'));
         this.columnasUsuario = parseInt(prompt('¿Cuántas columnas quieres?'));
 
@@ -22,7 +24,7 @@ class Tablero {
     //const tableroBuscaminas = new Tablero(3,5);
     // console.log(tableroBuscaminas);
     calcularSiEsPar() {
-
+        //Con éstemétodo comprobamos si los valores que nos ha dado dan un tablero par, si no le avisamos de que no lo es y volvemos a preguntar.
         let impar = true;
         while (impar) {
             if ((this.filasUsuario * this.columnasUsuario) % 2 == 0) {
@@ -36,7 +38,7 @@ class Tablero {
     }
 
     crearTablero() {
-
+        //Creamos el tablero
         this.arrayTablero = [];
 
         for (let fila = 0; fila < this.filasUsuario; fila++) {
@@ -48,7 +50,7 @@ class Tablero {
         }
     }
     pintarTablero() {
-
+        //Mostramos el tablero ya formado
         document.write('<table>');
 
         for (let i = 0; i < this.filasUsuario; i++) {
@@ -65,56 +67,62 @@ class Tablero {
 }
 
 class JuegoMemoria extends Tablero {
+    //Variable global para poder usar en varios métodos
+    arrayImgsAleatorias = [];
     constructor() {
         super();
         this.colocarImagenes();
         this.pintarImgs();
     }
     colocarImagenes() {
+        //Método para recibir las imágenes, crear su pareja, y dar una posición desordenada pero sin que se repita.
         let imagenesSeleccionadasAnimales = 0;
         let tamanyoTablero = this.filasUsuario * this.columnasUsuario;
         let arrayImagenes = ['imgs/caballo.jpg', 'imgs/cerdo.jpg', 'imgs/elefante.jpg', 'imgs/erizo.jpg', 'imgs/gato.jpg', 'imgs/leon.jpg', 'imgs/panda.jpg', 'imgs/perro.jpeg', 'imgs/pollito.jpg', 'imgs/vaca.jpg'];
-
-
-        let arrayImgsAleatorias = [];
+    
         debugger
-        while  (arrayImgsAleatorias.length < tamanyoTablero) {
-         arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
-         arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
+        //Con el bucle creamos un nuevo arrray con las parejas necesarias para el tamaño definido de tablero
+        while (this.arrayImgsAleatorias.length < tamanyoTablero) {
+            this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
+            this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
             imagenesSeleccionadasAnimales++
             if (arrayImagenes.length == imagenesSeleccionadasAnimales) {
-                imagenesSeleccionadasAnimales = 0
+                imagenesSeleccionadasAnimales = 0;
             }
 
-            console.log (arrayImgsAleatorias.length);
-        }
-        // console.log arrayImgsAleatorias)
-
-        for (let i = 0; i < tamanyoTablero; i++) {
-         arrayImgsAleatorias = arrayImgsAleatorias.sort(function () { return Math.random() - 0.5 });
-
-        }
-
-        console.log (arrayImgsAleatorias);
-
-
-    }
-    pintarImgs() {
-        for (let i = 0; i <this.filasUsuario; i++) {
-            for (let j = 0; j < this.columnasUsuario; j++) {
-                
-                this.arrayTablero= this.arrayImgsAleatorias[i][j];
-            }
           
-            
         }
-        console.log(this.arrayTablero);
-       
-     
+        
+
+        //Desordenamos el array para que salgan en diferentes posiciones.
+        for (let i = 0; i < tamanyoTablero; i++) {
+            this.arrayImgsAleatorias = this.arrayImgsAleatorias.sort(function () { return Math.random() - 0.5 });
+
+        }
+
+        // console.log (arrayImgsAleatorias);
+
+
     }
+
+    pintarImgs() {
+        //Metemos el array de las imagenes taly como queremos y lo añadimos a la tabla para sacar por pantalla.
+        debugger
+        for (let i = 0; i < this.filasUsuario; i++) {
+            for (let j = 0; j < this.columnasUsuario; j++) {
+                this.arrayTablero[i][j]=this.arrayImgsAleatorias[i][j];
+
+
+        }
+        
+        
+
+
+    }
+    console.log(this.arrayTablero);
 }
-
+}
+//Creamos el objeto
 const tableroNuevo = new JuegoMemoria();
-
 
 
