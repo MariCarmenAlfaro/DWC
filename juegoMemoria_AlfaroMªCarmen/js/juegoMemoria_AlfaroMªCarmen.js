@@ -8,8 +8,8 @@ class Tablero {
 
         this.saberColumnasyFilas();
         this.calcularSiEsPar();
-        this.crearTablero();
-        this.pintarTablero();
+      //  this.crearTablero();
+       // this.pintarTablero();
     }
 
 
@@ -36,7 +36,7 @@ class Tablero {
         }
 
     }
-
+/*
     crearTablero() {
         //Creamos el tablero
         this.arrayTablero = [];
@@ -48,7 +48,8 @@ class Tablero {
                 this.arrayTablero[fila][columna] = '';
             }
         }
-    }
+    }*/
+    /*
     pintarTablero() {
         //Mostramos el tablero ya formado
         document.write('<table>');
@@ -57,13 +58,14 @@ class Tablero {
             document.write('<tr>');
 
             for (let j = 0; j < this.columnasUsuario; j++) {
-                document.write('<td>' + this.arrayTablero[i][j] + '</td>');
+               
+                document.write('<td> <img src="' + this.urlFoto + '" alt="alternatetext"> </td>');
             }
 
             document.write('</tr>');
         }
         document.write('</table>');
-    }
+    }*/
 }
 
 class JuegoMemoria extends Tablero {
@@ -72,15 +74,18 @@ class JuegoMemoria extends Tablero {
     constructor() {
         super();
         this.colocarImagenes();
-        this.pintarImgs();
+       // this.pintarImgs();
+        this.crearTablero();
+        this.pintarTablero();
     }
     colocarImagenes() {
         //Método para recibir las imágenes, crear su pareja, y dar una posición desordenada pero sin que se repita.
         let imagenesSeleccionadasAnimales = 0;
         let tamanyoTablero = this.filasUsuario * this.columnasUsuario;
+
         let arrayImagenes = ['imgs/caballo.jpg', 'imgs/cerdo.jpg', 'imgs/elefante.jpg', 'imgs/erizo.jpg', 'imgs/gato.jpg', 'imgs/leon.jpg', 'imgs/panda.jpg', 'imgs/perro.jpeg', 'imgs/pollito.jpg', 'imgs/vaca.jpg'];
     
-        debugger
+        
         //Con el bucle creamos un nuevo arrray con las parejas necesarias para el tamaño definido de tablero
         while (this.arrayImgsAleatorias.length < tamanyoTablero) {
             this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
@@ -100,11 +105,11 @@ class JuegoMemoria extends Tablero {
 
         }
 
-        // console.log (arrayImgsAleatorias);
+         console.log (this.arrayImgsAleatorias);
 
 
     }
-
+/*
     pintarImgs() {
         //Metemos el array de las imagenes taly como queremos y lo añadimos a la tabla para sacar por pantalla.
         debugger
@@ -112,16 +117,57 @@ class JuegoMemoria extends Tablero {
             for (let j = 0; j < this.columnasUsuario; j++) {
                 this.arrayTablero[i][j]=this.arrayImgsAleatorias[i][j];
 
-
+                
         }
         
         
 
 
+    }*/
+    crearTablero() {
+        //Creamos el tablero
+        this.arrayTablero = [];
+        let cuadrado = 0;
+
+        debugger
+        for (let fila = 0; fila < this.filasUsuario; fila++) {
+            this.arrayTablero[fila] = [];
+
+            for (let columna = 0; columna < this.columnasUsuario; columna++) {
+                this.arrayTablero[fila][columna] = this.arrayImgsAleatorias[cuadrado];
+                cuadrado ++
+            }
+        }
     }
-    console.log(this.arrayTablero);
+    pintarTablero() {
+        debugger
+        //Mostramos el tablero ya formado
+        document.write('<table>');
+        for (let indiceFilas = 0; indiceFilas < this.arrayTablero.length; indiceFilas++) {
+            document.write('<tr>');
+           
+            for (let indiceColumna = 0; indiceColumna < this.arrayTablero[indiceFilas].length; indiceColumna++) {
+                
+                document.write('<td> <img src="' + this.arrayTablero[indiceFilas][indiceColumna] + '" alt="Imagen"> </td>');
+            }
+            document.write('</tr>');
+        }
+/*
+        for (let i = 0; i < this.filasUsuario; i++) {
+            document.write('<tr>');
+
+            for (let j = 0; j < this.columnasUsuario; j++) {
+               
+                document.write('<td> <img src="' + this.arrayImgsAleatoria[i] + '" alt="alternatetext"> </td>');
+            }
+
+            document.write('</tr>');
+        }*/
+        document.write('</table>');
+    }
+   // console.log(this.arrayTablero);
 }
-}
+
 //Creamos el objeto
 const tableroNuevo = new JuegoMemoria();
 
