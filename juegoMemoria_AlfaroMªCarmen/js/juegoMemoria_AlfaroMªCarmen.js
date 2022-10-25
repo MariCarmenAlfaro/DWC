@@ -3,15 +3,12 @@ class Tablero {
     //Definimos variables globales para usar en todo el código.
     filasUsuario = "";
     columnasUsuario = "";
-
-
-
     constructor() {
 
         this.saberColumnasyFilas();
         this.calcularSiEsPar();
         this.crearTablero();
-        
+
     }
 
     saberColumnasyFilas() {
@@ -47,6 +44,7 @@ class Tablero {
             }
         }
     }
+
     pintarTablero() {
 
         //Mostramos el tablero ya formado
@@ -55,14 +53,14 @@ class Tablero {
         for (let i = 0; i < this.filasUsuario; i++) {
             document.write('<tr>');
             for (let j = 0; j < this.columnasUsuario; j++) {
-                document.write('<td>' + this.arrayTablero[i][j] + '</td>');
+
+                document.write(`<td> <img class="imagen" src="${this.arrayTablero[i][j]}" > </td>`);
             }
             document.write('</tr>');
-        }
-        document.write('</table>');
+
+        } document.write('</table>');
     }
 }
-
 
 
 class JuegoMemoria extends Tablero {
@@ -72,17 +70,21 @@ class JuegoMemoria extends Tablero {
         super();
         this.colocarImagenes();
         this.pintarTablero();
-        
+
     }
+    //Método para recibir las imágenes, crear su pareja, y dar una posición desordenada pero sin que se repita.
     colocarImagenes() {
-        //Método para recibir las imágenes, crear su pareja, y dar una posición desordenada pero sin que se repita.
+        
         let imagenesSeleccionadasAnimales = 0;
         let tamanyoTablero = this.filasUsuario * this.columnasUsuario;
-
         let arrayImagenes = ['imgs/caballo.jpg', 'imgs/cerdo.jpg', 'imgs/elefante.jpg', 'imgs/erizo.jpg', 'imgs/gato.jpg', 'imgs/leon.jpg', 'imgs/panda.jpg', 'imgs/perro.jpeg', 'imgs/pollito.jpg', 'imgs/vaca.jpg'];
+        let casilla = 0;
+        //Bucle para desordenar todas las imagenes y que así nunca se escojan las mismas.
+        for (let i = 0; i < tamanyoTablero; i++) {
+            arrayImagenes = arrayImagenes.sort(function () { return Math.random() - 0.5 });
 
-
-        //Con el bucle creamos un nuevo arrray con las parejas necesarias para el tamaño definido de tablero
+        }
+        //Con el bucle creamos un nuevo array con las parejas necesarias para el tamaño definido de tablero
         while (this.arrayImgsAleatorias.length < tamanyoTablero) {
             this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
             this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
@@ -90,8 +92,6 @@ class JuegoMemoria extends Tablero {
             if (arrayImagenes.length == imagenesSeleccionadasAnimales) {
                 imagenesSeleccionadasAnimales = 0;
             }
-
-
         }
         //Desordenamos el array para que salgan en diferentes posiciones.
         for (let i = 0; i < tamanyoTablero; i++) {
@@ -99,58 +99,15 @@ class JuegoMemoria extends Tablero {
 
         }
 
+        //Metemos el array de las imagenes tal y como queremos y lo añadimos a la tabla para sacar por pantalla.
+
         for (let i = 0; i < this.filasUsuario; i++) {
-            //Metemos el array de las imagenes taly como queremos y lo añadimos a la tabla para sacar por pantalla.
-            debugger
-            for (let i = 0; i < this.filasUsuario; i++) {
-                for (let j = 0; j < this.columnasUsuario; j++) {
+            for (let j = 0; j < this.columnasUsuario; j++) {
 
-                    this.arrayTablero = this.arrayImgsAleatorias[i][j];
-                }
-
-
-                this.arrayTablero[i][j] = this.arrayImgsAleatorias[i][j];
-
-
+                this.arrayTablero[i][j] = this.arrayImgsAleatorias[casilla];
+                casilla++;
             }
-            //   console.log(this.arrayImgsAleatorias);
-
-
         }
-        /*
-        crearTablero() {
-            //Creamos el tablero
-            this.arrayTablero = [];
-            let posicionImg = 0;
-    
-            debugger
-            for (let fila = 0; fila < this.filasUsuario; fila++) {
-                this.arrayTablero[fila] = [];
-    
-                for (let columna = 0; columna < this.columnasUsuario; columna++) {
-                    this.arrayTablero[fila][columna] = this.arrayImgsAleatorias[posicionImg];
-                    posicionImg++
-                }
-            }
-        }*/
-        /*
-        pintarTablero() {
-            debugger
-            //Mostramos el tablero ya formado
-            document.write('<table>');
-            for (let i = 0; i < this.arrayTablero.length; i++) {
-                document.write('<tr>');
-    
-                for (let j = 0; j < this.arrayTablero[i].length; j++) {
-    
-                    document.write('<td> <img class="imagen" src="' + this.arrayTablero[i][j] + '" alt="Imagen"> </td>');
-                }
-                document.write('</tr>');
-            }
-    
-            document.write('</table>');
-        }*/
-        // console.log(this.arrayTablero);
     }
 }
 //Creamos el objeto
