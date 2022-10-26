@@ -2,29 +2,24 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-
+    width: 100%;
+  
 }
 
-h1 {
+.titulo {
     color: rgb(255, 47, 182);
-
-    text-shadow: 1px 2x black;
+    text-shadow: 1px 2px black;
 }
 
-h2,
-p {
+.autor,
+.puntuacion {
     color: rgb(249, 112, 201);
 
 }
 
 .cuerpo {
     margin: auto;
-    max-width: 70%;
-    text-align: center;
-    padding: 5px;
-    
-}
-#encabezado{
+    max-width: 80%;
     text-align: center;
 }
 
@@ -34,20 +29,15 @@ td {
     border: 2px solid rgb(255, 47, 182);
     border-collapse: collapse;
     background-color: rgb(252, 236, 243);
-    justify-content: center;
-
-}
-
-table {
-    margin: auto;
-    text-align: center;
+   
 }
 
 td,
 .imagen {
-    width: 70px;
+    width: 100px;
 }
 
 .imagen {
-    padding: 5px 5px 0px 5px;
+    padding-top: 5px;
+    
 }
