@@ -9,7 +9,7 @@ class Tablero {
         this.crearTablero();
     }
 
-     //Método para preguntar al usuario las filas y columnas que desee para formar el tablero
+    //Método para preguntar al usuario las filas y columnas que desee para formar el tablero
     saberColumnasyFilas() {
         alert("¡VAMOS A JUGAR!");
         this.filasUsuario = parseInt(prompt('¿Cuántas filas quieres?'));
@@ -60,25 +60,24 @@ class Tablero {
 class JuegoMemoria extends Tablero {
     //Variable global para poder usar en varios métodos
     arrayImgsAleatorias = [];
+    tamanyoTablero = this.filasUsuario * this.columnasUsuario;
     constructor() {
         super();
+        this.hacerParejas();
         this.colocarImagenes();
         this.pintarTablero();
     }
 
-    //Método para recibir las imágenes, crear su pareja, y dar una posición desordenada pero sin que se repita.
-    colocarImagenes() {
-        let imagenesSeleccionadasAnimales = 0;
-        let tamanyoTablero = this.filasUsuario * this.columnasUsuario;
-        let arrayImagenes = ['imgs/caballo.jpg', 'imgs/cerdo.jpg', 'imgs/elefante.jpg', 'imgs/erizo.jpg', 'imgs/gato.jpg', 'imgs/leon.jpg', 'imgs/panda.jpg', 'imgs/perro.jpeg', 'imgs/pollito.jpg', 'imgs/vaca.jpg'];
-        let casilla = 0;
-        //Bucle para desordenar todas las imagenes y que así nunca se escojan de primeras las mismas.
-        for (let i = 0; i < tamanyoTablero; i++) {
-            arrayImagenes = arrayImagenes.sort(function () { return Math.random() - 0.5 });
+    hacerParejas() {
 
-        }
+        let imagenesSeleccionadasAnimales = 0;
+        let arrayImagenes = ['imgs/caballo.jpg', 'imgs/cerdo.jpg', 'imgs/elefante.jpg', 'imgs/erizo.jpg', 'imgs/gato.jpg', 'imgs/leon.jpg', 'imgs/panda.jpg', 'imgs/perro.jpeg', 'imgs/pollito.jpg', 'imgs/vaca.jpg'];
+
+        //Llamamos al metodo desordenarArrays para que cada primera posicion sea diferente siempre.
+        arrayImagenes = this.desordenarArrays(arrayImagenes);
+
         //Con el bucle, creamos un nuevo array metiendo parejas necesarias para el tamaño definido de tablero
-        while (this.arrayImgsAleatorias.length < tamanyoTablero) {
+        while (this.arrayImgsAleatorias.length < this.tamanyoTablero) {
             this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
             this.arrayImgsAleatorias.push(arrayImagenes[imagenesSeleccionadasAnimales]);
             imagenesSeleccionadasAnimales++
@@ -86,16 +85,27 @@ class JuegoMemoria extends Tablero {
                 imagenesSeleccionadasAnimales = 0;
             }
         }
+        return this.arrayImgsAleatorias;
+    }
+    //Metodo para desordenar arrays.
+    desordenarArrays(arraysDesordenados) {
         //Desordenamos el array para que se coloquen en diferentes posiciones dentro del tablero.
-        for (let i = 0; i < tamanyoTablero; i++) {
-            this.arrayImgsAleatorias = this.arrayImgsAleatorias.sort(function () { return Math.random() - 0.5 });
+        for (let i = 0; i < this.tamanyoTablero; i++) {
+            arraysDesordenados = arraysDesordenados.sort(function () { return Math.random() - 0.5 });
 
         }
-
+        return arraysDesordenados;
+    }
+    //Método para recibir las imágenes ya en pareja, y dar una posición desordenada pero sin que se repita.
+    colocarImagenes(arrayParejas) {
+        debugger
+        arrayParejas = this.hacerParejas();
+        arrayParejas=this.desordenarArrays(arrayParejas);
+        let casilla = 0;
         //Metemos el array de la manera deseada, en parejas de forma aleatorias, y lo añadimos al tablero para sacar por pantalla.
         for (let i = 0; i < this.filasUsuario; i++) {
             for (let j = 0; j < this.columnasUsuario; j++) {
-                this.arrayTablero[i][j] = this.arrayImgsAleatorias[casilla];
+                this.arrayTablero[i][j] = arrayParejas[casilla];
                 casilla++;
             }
         }

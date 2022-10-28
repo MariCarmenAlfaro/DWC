@@ -3,7 +3,6 @@
     margin: 0px;
     box-sizing: border-box;
     width: 100%;
-  
 }
 
 .titulo {
@@ -14,7 +13,6 @@
 .autor,
 .puntuacion {
     color: rgb(249, 112, 201);
-
 }
 
 .cuerpo {
@@ -24,12 +22,10 @@
 }
 
 table,
-tr,
 td {
     border: 2px solid rgb(255, 47, 182);
     border-collapse: collapse;
     background-color: rgb(252, 236, 243);
-   
 }
 
 td,
