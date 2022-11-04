@@ -67,7 +67,7 @@ class JuegoMemoria extends Tablero {
         this.colocarImagenes();
         this.pintarTablero();
     }
-
+    
     hacerParejas() {
 
         let imagenesSeleccionadasAnimales = 0;
