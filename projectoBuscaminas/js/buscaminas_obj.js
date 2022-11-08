@@ -4,7 +4,7 @@ class Tablero {
         this.columnas = columnas;
 
         this.crearTablero();
-        this.pintarTablero();
+
     }
     //const tableroBuscaminas = new Tablero(3,5);
     // console.log(tableroBuscaminas);
@@ -37,6 +37,26 @@ class Tablero {
         }
         document.write('</table>');
     }
+    pintarTableroDOM() {
+        let tabla = document.createElement("table");
+
+
+        document.body.appendChild(tabla);
+
+        for (let i = 0; i < this.filas; i++) {
+            let fila = document.createElement("tr");
+            document.tabla.appendChild(fila);
+
+            for (let j = 0; j < this.columnas; j++) {
+                let columna = document.createElement("td");
+                columna.innerHTML = '<td>'+this.arrayTablero[i][j]+'</td>';
+                document.fila.appendChild(columna);
+            }
+
+
+        }
+
+    }
     //const pintarMinas =new Tablero(3,4);
     //Modificar filas/columnas y volver a crear el tablero con las filas/columnas nuevas
 
@@ -50,37 +70,37 @@ class Tablero {
     }
 
 }
-class Buscaminas extends Tablero{
-    constructor(filas, columnas, numMinas){
-        super(filas,columnas);
-        this.numMinas=numMinas;
+class Buscaminas extends Tablero {
+    constructor(filas, columnas, numMinas) {
+        super(filas, columnas);
+        this.numMinas = numMinas;
         this.colocarMinas();
         this.contarMinas();
     }
 
-    colocarMinas(){
+    colocarMinas() {
         let contadorMinas = 0;
         let posFila;
         let posColumna;
-    
-    
+
+
         while (contadorMinas < this.numMinas) {
             posFila = Math.floor(Math.random() * this.filas);
             posColumna = Math.floor(Math.random() * this.columnas);
-    
+
             if (this.arrayTablero[posFila][posColumna] != 'MINA') {
                 this.arrayTablero[posFila][posColumna] = 'MINA';
                 contadorMinas++;
             };
         };
-    
-       // let buscaminas1=new Buscaminas(5,5,5);
+
+        // let buscaminas1=new Buscaminas(5,5,5);
 
         //console.log(buscaminas1.arrayTablero);
     }
-    contarMinas(){
+    contarMinas() {
         let numMinasAlrededor;
-    
+
         for (let fila = 0; fila < this.filas; fila++) {
             for (let columna = 0; columna < this.columnas; columna++) {
                 numMinasAlrededor = 0;
@@ -96,13 +116,14 @@ class Buscaminas extends Tablero{
                         }
                         this.arrayTablero[fila][columna] = numMinasAlrededor;
                     }
-        
+
                 }
             }
         }
     }
 
 }
-let buscaminas2 = new Buscaminas(5,5,5);
-
-
+window.onload = function () {
+    let buscaminas2 = new Buscaminas(5, 5, 5);
+    buscaminas2.pintarTableroDOM();
+}
