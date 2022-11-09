@@ -38,19 +38,19 @@ class Tablero {
         document.write('</table>');
     }
     pintarTableroDOM() {
-        let tabla = document.createElement("table");
-
-
+        let tabla = document.createElement('table');
+        let fila;
+        let columna;
         document.body.appendChild(tabla);
 
         for (let i = 0; i < this.filas; i++) {
-            let fila = document.createElement("tr");
-            document.tabla.appendChild(fila);
+             fila = document.createElement('tr');
+            tabla.appendChild(fila);
 
             for (let j = 0; j < this.columnas; j++) {
-                let columna = document.createElement("td");
-                columna.innerHTML = '<td>'+this.arrayTablero[i][j]+'</td>';
-                document.fila.appendChild(columna);
+                 columna = document.createElement("td");
+                 fila.appendChild(columna);
+                
             }
 
 
