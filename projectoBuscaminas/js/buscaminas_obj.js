@@ -37,6 +37,7 @@ class Tablero {
         }
         document.write('</table>');
     }
+
     pintarTableroDOM() {
         let tabla = document.createElement('table');
         let fila;
@@ -44,18 +45,39 @@ class Tablero {
         document.body.appendChild(tabla);
 
         for (let i = 0; i < this.filas; i++) {
-             fila = document.createElement('tr');
+            fila = document.createElement('tr');
             tabla.appendChild(fila);
 
             for (let j = 0; j < this.columnas; j++) {
-                 columna = document.createElement("td");
-                 fila.appendChild(columna);
+                columna = document.createElement("td");
+                fila.appendChild(columna);
+
+                columna.id = "f" + i + "c" + j;
+
+                columna.dataset.fila = i;
+                columna.dataset.columna = j;
+                columna.addEventListener('click', this.despejar);
+                columna.addEventListener('contextmenu', this.marcar);
                 
             }
 
 
         }
 
+    }
+
+    /*Para los metodos 
+    1. Obtener el nodo que produjo el evento
+    2. Obtener del nodo que produjo el evento el valor de su atributo data.fila y data.columna
+    Poner alert(he marcado la fila "valor" y la columna"valor")Para marcar
+    alert(he despejado  " " "" "") para despejar.
+    alert() 
+    */
+    despejar(event) {
+        alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
+    }
+    marcar() {
+        alert("Has clicado con el boton derecho!!!");
     }
     //const pintarMinas =new Tablero(3,4);
     //Modificar filas/columnas y volver a crear el tablero con las filas/columnas nuevas
