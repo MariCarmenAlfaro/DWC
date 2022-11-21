@@ -58,7 +58,7 @@ class Tablero {
                 columna.dataset.columna = j;
                 columna.addEventListener('click', this.despejar);
                 columna.addEventListener('contextmenu', this.marcar);
-                
+
             }
 
 
@@ -73,12 +73,30 @@ class Tablero {
     alert(he despejado  " " "" "") para despejar.
     alert() 
     */
-    despejar(event) {
-        alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
+    despejar() {
+        alert("Despejada fila: " + this.dataset.fila + " y columna: " + this.dataset.columna);
     }
     marcar() {
-        alert("Has clicado con el boton derecho!!!");
+        // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
+
+        switch (this.style.backgroundColor) {
+            case this.style.backgroundColor = "rgb(252, 218, 234)":
+                this.innerHTML = "&#127988;&#8205;&#9760;&#65039";
+                break;
+
+            case this.innerHTML = "&#127988;&#8205;&#9760;&#65039":
+                this.innerHTML = "&#10068";
+                break;
+
+            default: this.style.backgroundColor = "rgb(252, 218, 234)";
+        }
+
+
     }
+
+    /*1click poner celda en rojo
+    2 click celda amarillo
+    3 click volver al color original*/
     //const pintarMinas =new Tablero(3,4);
     //Modificar filas/columnas y volver a crear el tablero con las filas/columnas nuevas
 
