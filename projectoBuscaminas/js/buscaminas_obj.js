@@ -79,16 +79,20 @@ class Tablero {
     marcar() {
         // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
 
-        switch (this.style.backgroundColor) {
-            case this.style.backgroundColor = "rgb(252, 218, 234)":
-                this.innerHTML = "&#127988;&#8205;&#9760;&#65039";
+
+        switch (this.innerHTML) {
+            case this.innerHTML = "":
+                this.innerHTML = "🚩";
                 break;
 
-            case this.innerHTML = "&#127988;&#8205;&#9760;&#65039":
-                this.innerHTML = "&#10068";
+            case this.innerHTML = "🚩":
+                this.innerHTML = "❓";
+                break;
+            case this.innerHTML = "❓":
+                this.innerHTML = "";
                 break;
 
-            default: this.style.backgroundColor = "rgb(252, 218, 234)";
+
         }
 
 
