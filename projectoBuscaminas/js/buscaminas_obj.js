@@ -19,6 +19,7 @@ class Tablero {
                 this.arrayTablero[fila][columna] = '';
             }
         }
+
     }
     //const buscaminas=new Tablero(3,4);
     //buscaminas.crearTablero();
@@ -73,30 +74,7 @@ class Tablero {
     alert(he despejado  " " "" "") para despejar.
     alert() 
     */
-    despejar() {
-        alert("Despejada fila: " + this.dataset.fila + " y columna: " + this.dataset.columna);
-    }
-    marcar() {
-        // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
 
-
-        switch (this.innerHTML) {
-            case this.innerHTML = "":
-                this.innerHTML = "🚩";
-                break;
-
-            case this.innerHTML = "🚩":
-                this.innerHTML = "❓";
-                break;
-            case this.innerHTML = "❓":
-                this.innerHTML = "";
-                break;
-
-
-        }
-
-
-    }
 
     /*1click poner celda en rojo
     2 click celda amarillo
@@ -164,6 +142,36 @@ class Buscaminas extends Tablero {
                 }
             }
         }
+    }
+    despejar() {
+        let columna = this.dataset.columna;
+        let fila = this.dataset.fila;
+        if (this.arrayTablero[fila][columna] == 1) {
+            this.innerHTML = this.arrayTablero[fila][columna];
+        }
+
+        console.log(this.arrayTablero[fila][columna]);
+    }
+    marcar() {
+        // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
+
+
+        switch (this.innerHTML) {
+            case this.innerHTML = "":
+                this.innerHTML = "🚩";
+                break;
+
+            case this.innerHTML = "🚩":
+                this.innerHTML = "❓";
+                break;
+            case this.innerHTML = "❓":
+                this.innerHTML = "";
+                break;
+
+
+        }
+
+
     }
 
 }
