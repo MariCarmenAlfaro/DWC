@@ -57,8 +57,7 @@ class Tablero {
 
                 columna.dataset.fila = i;
                 columna.dataset.columna = j;
-                columna.addEventListener('click', this.despejar);
-                columna.addEventListener('contextmenu', this.marcar);
+
 
             }
 
@@ -143,39 +142,63 @@ class Buscaminas extends Tablero {
             }
         }
     }
-    despejar() {
-        let columna = this.dataset.columna;
-        let fila = this.dataset.fila;
-        if (this.arrayTablero[fila][columna] == 1) {
-            this.innerHTML = this.arrayTablero[fila][columna];
-        }
 
-        console.log(this.arrayTablero[fila][columna]);
-    }
-    marcar() {
-        // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
-
-
-        switch (this.innerHTML) {
-            case this.innerHTML = "":
-                this.innerHTML = "🚩";
-                break;
-
-            case this.innerHTML = "🚩":
-                this.innerHTML = "❓";
-                break;
-            case this.innerHTML = "❓":
-                this.innerHTML = "";
-                break;
-
-
-        }
-
-
-    }
+ 
 
 }
 window.onload = function () {
-    let buscaminas2 = new Buscaminas(5, 5, 5);
+    var buscaminas2 = new Buscaminas(5, 5, 5);
     buscaminas2.pintarTableroDOM();
+    ponerEventos();
+
+
+function despejar() {
+    let columna = this.dataset.columna;
+    let fila = this.dataset.fila;
+   /* if (this.arrayTablero[fila][columna] == 1) {
+        this.innerHTML = this.arrayTablero[fila][columna];
+    }*/
+
+    console.log(arrayTablero);
+}
+function marcar() {
+    // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
+    window.oncontextmenu=function(){
+        return false;
+    };
+
+    switch (this.innerHTML) {
+        case this.innerHTML = "":
+            this.innerHTML = "🚩";
+            break;
+
+        case this.innerHTML = "🚩":
+            this.innerHTML = "❓";
+            break;
+        case this.innerHTML = "❓":
+            this.innerHTML = "";
+            break;
+
+
+    }
+
+
+}
+
+function ponerEventos() {
+    
+    let celda;
+    for (let i = 0; i < this.filas; i++) {
+        
+        for (let j = 0; j < this.columnas; j++) {
+            celda = document.getElementById("f" + i + "c" + j);
+            
+            celda.addEventListener('click', this.despejar);
+            celda.addEventListener('contextmenu', this.marcar);
+            celda=this.arrayTablero[i][j];
+          
+        }
+
+    }
+}
 }
