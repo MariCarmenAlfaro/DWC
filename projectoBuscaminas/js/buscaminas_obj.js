@@ -40,31 +40,27 @@ class Tablero {
     }
 
     pintarTableroDOM() {
+        // Creamos el tablero en DOM
         let tabla = document.createElement('table');
         let fila;
         let columna;
-        document.body.appendChild(tabla);
 
         for (let i = 0; i < this.filas; i++) {
             fila = document.createElement('tr');
             tabla.appendChild(fila);
 
             for (let j = 0; j < this.columnas; j++) {
-                columna = document.createElement("td");
-                fila.appendChild(columna);
-
-                columna.id = "f" + i + "c" + j;
-
+                columna = document.createElement('td');
+                columna.id = `f${i}_c${j}`;
                 columna.dataset.fila = i;
                 columna.dataset.columna = j;
-
-
+                fila.appendChild(columna);
             }
-
-
         }
 
+        document.body.appendChild(tabla);
     }
+
 
     /*Para los metodos 
     1. Obtener el nodo que produjo el evento
@@ -143,62 +139,74 @@ class Buscaminas extends Tablero {
         }
     }
 
- 
+    pintarTableroDOM() {
+        super.pintarTableroDOM();
 
-}
-window.onload = function () {
-    var buscaminas2 = new Buscaminas(5, 5, 5);
-    buscaminas2.pintarTableroDOM();
-    ponerEventos();
+        let celda;
 
+        for (let i = 0; i < this.filas; i++) {
+            for (let j = 0; j < this.columnas; j++) {
+                celda = document.getElementById(`f${i}_c${j}`);
 
-function despejar() {
-    let columna = this.dataset.columna;
-    let fila = this.dataset.fila;
-   /* if (this.arrayTablero[fila][columna] == 1) {
-        this.innerHTML = this.arrayTablero[fila][columna];
-    }*/
-
-    console.log(arrayTablero);
-}
-function marcar() {
-    // alert("Marcada fila: "+this.dataset.fila+" y columna: "+this.dataset.columna);
-    window.oncontextmenu=function(){
-        return false;
-    };
-
-    switch (this.innerHTML) {
-        case this.innerHTML = "":
-            this.innerHTML = "🚩";
-            break;
-
-        case this.innerHTML = "🚩":
-            this.innerHTML = "❓";
-            break;
-        case this.innerHTML = "❓":
-            this.innerHTML = "";
-            break;
-
-
-    }
-
-
-}
-
-function ponerEventos() {
-    
-    let celda;
-    for (let i = 0; i < this.filas; i++) {
-        
-        for (let j = 0; j < this.columnas; j++) {
-            celda = document.getElementById("f" + i + "c" + j);
-            
-            celda.addEventListener('click', this.despejar);
-            celda.addEventListener('contextmenu', this.marcar);
-            celda=this.arrayTablero[i][j];
-          
+                celda.addEventListener('click', this.despejar.bind(this));
+                celda.addEventListener('contextmenu', this.marcar);
+            }
         }
-
+      console.log(this.arrayTablero);  
     }
-}
+
+    despejar(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+        let fila = celda.dataset.fila;
+        let columna = celda.dataset.columna;
+        
+           let contenido  = this.arrayTablero[fila][columna];
+           
+           if(contenido>=0 || contenido <=8){
+            celda.innerHTML=contenido;
+           }else if(contenido=='MINA'){
+            celda.innerHTML=contenido;
+            alert("Has perdido...");
+            let cuadradito;
+            for (let i = 0; i < this.filas; i++) {
+
+                for (let j = 0; j < this.columnas; j++) {
+                    cuadradito=document.getElementById(`f${i}_c${j}`);
+                    if(cuadradito.innerHTML=="🚩"&& this.arrayTablero[i][j]!="MINA"){
+                        cuadradito.style.backgroundColor="rgba(255, 49, 49, 0.466)";
+                    }
+                }
+            }
+           
+
+           }
+           
+    }
+        marcar() {
+            //let evento = elEvento || window.event;
+            window.oncontextmenu = function () {
+                return false;
+            };
+            switch (this.innerHTML) {
+                case this.innerHTML = "":
+                    this.innerHTML = "🚩";
+                    break;
+
+                case this.innerHTML = "🚩":
+                    this.innerHTML = "❓";
+                    break;
+                case this.innerHTML = "❓":
+                    this.innerHTML = "";
+                    break;
+
+
+            }
+
+        }
+    }
+
+window.onload = function () {
+    let buscaminas1 = new Buscaminas(5, 5, 5);
+    buscaminas1.pintarTableroDOM();
 }
