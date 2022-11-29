@@ -152,7 +152,7 @@ class Buscaminas extends Tablero {
                 celda.addEventListener('contextmenu', this.marcar);
             }
         }
-      console.log(this.arrayTablero);  
+        console.log(this.arrayTablero);
     }
 
     despejar(elEvento) {
@@ -160,51 +160,57 @@ class Buscaminas extends Tablero {
         let celda = evento.currentTarget;
         let fila = celda.dataset.fila;
         let columna = celda.dataset.columna;
+
+        let contenido = this.arrayTablero[fila][columna];
+        let esNumero=contenido > 0 && contenido <= 8;
+        let esMina=contenido == 'MINA';
         
-           let contenido  = this.arrayTablero[fila][columna];
-           
-           if(contenido>=0 || contenido <=8){
-            celda.innerHTML=contenido;
-           }else if(contenido=='MINA'){
-            celda.innerHTML=contenido;
+
+
+        if (esNumero) {
+            celda.innerHTML = contenido;
+            celda.removeEventListener('click', this.despejar.bind(this));
+            celda.removeEventListener('contextmenu', this.marcar);
+        } else if (esMina) {
+
+            celda.innerHTML = contenido;
             alert("Has perdido...");
             let cuadradito;
             for (let i = 0; i < this.filas; i++) {
-
                 for (let j = 0; j < this.columnas; j++) {
-                    cuadradito=document.getElementById(`f${i}_c${j}`);
-                    if(cuadradito.innerHTML=="🚩"&& this.arrayTablero[i][j]!="MINA"){
-                        cuadradito.style.backgroundColor="rgba(255, 49, 49, 0.466)";
+                    cuadradito = document.getElementById(`f${i}_c${j}`);
+                    if (cuadradito.innerHTML == "🚩" && this.arrayTablero[i][j] != "MINA") {
+                        cuadradito.style.backgroundColor = "rgba(255, 49, 49, 0.466)";
                     }
                 }
             }
-           
 
-           }
-           
-    }
-        marcar() {
-            //let evento = elEvento || window.event;
-            window.oncontextmenu = function () {
-                return false;
-            };
-            switch (this.innerHTML) {
-                case this.innerHTML = "":
-                    this.innerHTML = "🚩";
-                    break;
-
-                case this.innerHTML = "🚩":
-                    this.innerHTML = "❓";
-                    break;
-                case this.innerHTML = "❓":
-                    this.innerHTML = "";
-                    break;
-
-
-            }
 
         }
+
     }
+    marcar() {
+        //let evento = elEvento || window.event;
+        window.oncontextmenu = function () {
+            return false;
+        };
+        switch (this.innerHTML) {
+            case this.innerHTML = "":
+                this.innerHTML = "🚩";
+                break;
+
+            case this.innerHTML = "🚩":
+                this.innerHTML = "❓";
+                break;
+            case this.innerHTML = "❓":
+                this.innerHTML = "";
+                break;
+
+
+        }
+
+    }
+}
 
 window.onload = function () {
     let buscaminas1 = new Buscaminas(5, 5, 5);
