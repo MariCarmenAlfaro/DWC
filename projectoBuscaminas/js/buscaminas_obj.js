@@ -162,9 +162,9 @@ class Buscaminas extends Tablero {
         let columna = celda.dataset.columna;
 
         let contenido = this.arrayTablero[fila][columna];
-        let esNumero=contenido > 0 && contenido <= 8;
-        let esMina=contenido == 'MINA';
-        
+        let esNumero = contenido > 0 && contenido <= 8;
+        let esMina = contenido == 'MINA';
+        let esCero = contenido == 0;
 
 
         if (esNumero) {
@@ -186,11 +186,28 @@ class Buscaminas extends Tablero {
             }
 
 
-        }
+        } else if (esCero) {
+            let cuadradito;
+            for (let i = fila - 1; i <= fila + 1; i++) {
+                if (i >= 0 && i <= this.filas) {
+                    for (let j = columna - 1; j <= columna + 1; j++) {
+                        if (j >= 0 && j <= this.columnas) {
+                            cuadradito=document.getElementById(`f${i}_c${j}`);
+                            if(cuadradito != "MINA"){
+                                cuadradito.innerHTML = this.arrayTablero[i][j];
+                            }
+                        }
 
+                    }
+               
+                }
+            };
+        }
     }
+
+
+
     marcar() {
-        //let evento = elEvento || window.event;
         window.oncontextmenu = function () {
             return false;
         };
