@@ -158,8 +158,8 @@ class Buscaminas extends Tablero {
     despejar(elEvento) {
         let evento = elEvento || window.event;
         let celda = evento.currentTarget;
-        let fila = celda.dataset.fila;
-        let columna = celda.dataset.columna;
+        let fila = parseInt(celda.dataset.fila);
+        let columna = parseInt(celda.dataset.columna);
 
         let contenido = this.arrayTablero[fila][columna];
         let esNumero = contenido > 0 && contenido <= 8;
@@ -193,8 +193,13 @@ class Buscaminas extends Tablero {
                     for (let j = columna - 1; j <= columna + 1; j++) {
                         if (j >= 0 && j <= this.columnas) {
                             cuadradito=document.getElementById(`f${i}_c${j}`);
-                            if(cuadradito != "MINA"){
+                            if(this.arrayTablero[i][j] != "MINA" && this.arrayTablero[i][j] !=0){
                                 cuadradito.innerHTML = this.arrayTablero[i][j];
+                            }else if(this.arrayTablero[i][j]==0){
+
+                                cuadradito=
+                                this.despejar();
+
                             }
                         }
 
