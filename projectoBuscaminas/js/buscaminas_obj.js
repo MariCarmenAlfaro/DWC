@@ -155,9 +155,10 @@ class Buscaminas extends Tablero {
         console.log(this.arrayTablero);
     }
 
-    despejar(elEvento) {
-        let evento = elEvento || window.event;
-        let celda = evento.currentTarget;
+
+    despejar2(celda) {
+        
+        
         let fila = parseInt(celda.dataset.fila);
         let columna = parseInt(celda.dataset.columna);
 
@@ -188,17 +189,16 @@ class Buscaminas extends Tablero {
 
         } else if (esCero) {
             let cuadradito;
+            celda.innerHTML=contenido;
             for (let i = fila - 1; i <= fila + 1; i++) {
                 if (i >= 0 && i <= this.filas) {
                     for (let j = columna - 1; j <= columna + 1; j++) {
                         if (j >= 0 && j <= this.columnas) {
                             cuadradito=document.getElementById(`f${i}_c${j}`);
-                            if(this.arrayTablero[i][j] != "MINA" && this.arrayTablero[i][j] !=0){
-                                cuadradito.innerHTML = this.arrayTablero[i][j];
-                            }else if(this.arrayTablero[i][j]==0){
+                            
+                             if(cuadradito.innerHTML==null){
 
-                                cuadradito=
-                                this.despejar();
+                               this.despejar2(cuadradito);
 
                             }
                         }
@@ -210,8 +210,14 @@ class Buscaminas extends Tablero {
         }
     }
 
+    despejar(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+       
 
+          this.despejar2(celda);
 
+    }
     marcar() {
         window.oncontextmenu = function () {
             return false;
