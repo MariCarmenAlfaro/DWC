@@ -191,12 +191,12 @@ class Buscaminas extends Tablero {
             let cuadradito;
             celda.innerHTML=contenido;
             for (let i = fila - 1; i <= fila + 1; i++) {
-                if (i >= 0 && i <= this.filas) {
+                if (i >= 0 && i < this.filas) {
                     for (let j = columna - 1; j <= columna + 1; j++) {
-                        if (j >= 0 && j <= this.columnas) {
+                        if (j >= 0 && j < this.columnas) {
                             cuadradito=document.getElementById(`f${i}_c${j}`);
                             
-                             if(cuadradito.innerHTML==null){
+                             if(cuadradito.innerHTML==''){
 
                                this.despejar2(cuadradito);
 
