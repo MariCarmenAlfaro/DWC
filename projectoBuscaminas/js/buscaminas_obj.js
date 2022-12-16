@@ -91,6 +91,7 @@ class Buscaminas extends Tablero {
     constructor(filas, columnas, numMinas) {
         super(filas, columnas);
         this.numMinas = numMinas;
+        this.banderas=0;
         this.colocarMinas();
         this.contarMinas();
     }
@@ -143,12 +144,14 @@ class Buscaminas extends Tablero {
         super.pintarTableroDOM();
 
         let celda;
+        this.despejar = this.despejar.bind(this);
+        this.marcar = this.marcar.bind(this);
 
         for (let i = 0; i < this.filas; i++) {
             for (let j = 0; j < this.columnas; j++) {
                 celda = document.getElementById(`f${i}_c${j}`);
 
-                celda.addEventListener('click', this.despejar.bind(this));
+                celda.addEventListener('click', this.despejar);
                 celda.addEventListener('contextmenu', this.marcar);
             }
         }
@@ -156,11 +159,15 @@ class Buscaminas extends Tablero {
     }
 
 
-    despejar2(celda) {
-        
-        
+    despejarCelda(celda) {
+
+
         let fila = parseInt(celda.dataset.fila);
         let columna = parseInt(celda.dataset.columna);
+
+
+        celda.removeEventListener('click', this.despejar);
+        celda.removeEventListener('contextmenu', this.marcar);
 
         let contenido = this.arrayTablero[fila][columna];
         let esNumero = contenido > 0 && contenido <= 8;
@@ -170,8 +177,7 @@ class Buscaminas extends Tablero {
 
         if (esNumero) {
             celda.innerHTML = contenido;
-            celda.removeEventListener('click', this.despejar.bind(this));
-            celda.removeEventListener('contextmenu', this.marcar);
+
         } else if (esMina) {
 
             celda.innerHTML = contenido;
@@ -189,22 +195,22 @@ class Buscaminas extends Tablero {
 
         } else if (esCero) {
             let cuadradito;
-            celda.innerHTML=contenido;
+            celda.innerHTML = contenido;
             for (let i = fila - 1; i <= fila + 1; i++) {
                 if (i >= 0 && i < this.filas) {
                     for (let j = columna - 1; j <= columna + 1; j++) {
                         if (j >= 0 && j < this.columnas) {
-                            cuadradito=document.getElementById(`f${i}_c${j}`);
-                            
-                             if(cuadradito.innerHTML==''){
+                            cuadradito = document.getElementById(`f${i}_c${j}`);
 
-                               this.despejar2(cuadradito);
+                            if (cuadradito.innerHTML == '') {
+
+                                this.despejarCelda(cuadradito);
 
                             }
                         }
 
                     }
-               
+
                 }
             };
         }
@@ -213,30 +219,54 @@ class Buscaminas extends Tablero {
     despejar(elEvento) {
         let evento = elEvento || window.event;
         let celda = evento.currentTarget;
-       
 
-          this.despejar2(celda);
+
+        this.despejarCelda(celda);
 
     }
-    marcar() {
+    marcar(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+
+
         window.oncontextmenu = function () {
             return false;
         };
-        switch (this.innerHTML) {
-            case this.innerHTML = "":
-                this.innerHTML = "🚩";
+        switch (celda.innerHTML) {
+            case celda.innerHTML = "":
+             
+                if(this.banderas !=5){
+                    this.banderas++;
+                    celda.innerHTML = "🚩";
+                }else{
+                    celda.innerHTML = "❓";
+                }
                 break;
 
-            case this.innerHTML = "🚩":
-                this.innerHTML = "❓";
+            case celda.innerHTML = "🚩":
+                celda.innerHTML = "❓";
+                this.banderas--;
                 break;
-            case this.innerHTML = "❓":
-                this.innerHTML = "";
+            case celda.innerHTML = "❓":
+                celda.innerHTML = "";
                 break;
 
 
         }
 
+
+    }
+    ganar() {
+
+        for (let i = 0; i < this.filas; i++) {
+            for (let j = 0; j < this.columnas; j++) {
+                if(this.arrayTablero[i][j]=='MINA'&& celda.innerHTML=="🚩"){
+                    
+                }
+
+            }
+
+        }
     }
 }
 
