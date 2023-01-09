@@ -1,0 +1,39 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.titulo {
+    color: rgb(255, 47, 182);
+    text-shadow: 1px 2px black;
+}
+
+.autor,
+.puntuacion {
+    color: rgb(249, 112, 201);
+}
+
+.cuerpo {
+    margin: auto;
+    max-width: 80%;
+    text-align: center;
+}
+
+table,
+td {
+    border: 2px solid rgb(255, 47, 182);
+    border-collapse: collapse;
+    background-color: rgb(252, 236, 243);
+}
+
+td,
+.imagen {
+    width: 100px;
+}
+
+.imagen {
+    padding-top: 5px;
+    
+}
