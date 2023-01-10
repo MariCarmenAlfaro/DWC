@@ -15,12 +15,15 @@
     color: rgb(249, 112, 201);
 }
 
-.cuerpo {
+.cuerpo{
     margin: auto;
     max-width: 80%;
     text-align: center;
 }
-
+table{
+    max-width: 50%;
+    margin: auto;
+}
 table,
 td {
     border: 2px solid rgb(255, 47, 182);
@@ -29,8 +32,9 @@ td {
 }
 
 td,
-.imagen {
-    width: 100px;
+.imagen, tr {
+    width: 50px;
+    height: 50px;
 }
 
 .imagen {

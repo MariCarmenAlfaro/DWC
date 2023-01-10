@@ -54,6 +54,25 @@ class Tablero {
             document.write('</tr>');
         } document.write('</table>');
     }
+    pintarTableroDOM() {
+        debugger
+      let tabla = document.createElement('table');
+      let fila;
+      let columna;
+      for (let i = 0; i < this.filasUsuario; i++) {
+        fila=document.createElement('tr');
+        tabla.appendChild(fila);
+        for (let j = 0; j < this.columnasUsuario; j++) {
+           columna=document.createElement('td');
+           columna.id = `f${i}_c${j}`;
+           columna.dataset.fila = i;
+           columna.dataset.columna = j;
+           fila.appendChild(columna);
+        }
+        
+      }
+      document.body.appendChild(tabla);
+    }
 }
 
 //Creamos el objeto JuegoMemoria para formar todos los valores necesarios y meterlos en nuestro Tablero.
@@ -65,7 +84,7 @@ class JuegoMemoria extends Tablero {
         super();
         this.hacerParejas();
         this.colocarImagenes();
-        this.pintarTablero();
+        this.pintarTableroDOM();
     }
     
     hacerParejas() {
@@ -98,7 +117,7 @@ class JuegoMemoria extends Tablero {
     }
     //Método para recibir las imágenes ya en pareja, y dar una posición desordenada pero sin que se repita.
     colocarImagenes(arrayParejas) {
-        debugger
+        
         arrayParejas = this.hacerParejas();
         arrayParejas=this.desordenarArrays(arrayParejas);
         let casilla = 0;
