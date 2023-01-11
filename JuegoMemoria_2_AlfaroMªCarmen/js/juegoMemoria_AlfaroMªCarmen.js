@@ -56,22 +56,24 @@ class Tablero {
     }
     pintarTableroDOM() {
         debugger
-      let tabla = document.createElement('table');
-      let fila;
-      let columna;
-      for (let i = 0; i < this.filasUsuario; i++) {
-        fila=document.createElement('tr');
-        tabla.appendChild(fila);
-        for (let j = 0; j < this.columnasUsuario; j++) {
-           columna=document.createElement('td');
-           columna.id = `f${i}_c${j}`;
-           columna.dataset.fila = i;
-           columna.dataset.columna = j;
-           fila.appendChild(columna);
+        let tabla = document.createElement('table');
+        let fila;
+        let columna;
+        for (let i = 0; i < this.filasUsuario; i++) {
+            fila = document.createElement('tr');
+            tabla.appendChild(fila);
+            for (let j = 0; j < this.columnasUsuario; j++) {
+                columna = document.createElement('td');
+                //imagen = document.createElement('img');
+                columna.id = `f${i}_c${j}`;
+                columna.dataset.fila = i;
+                columna.dataset.columna = j;
+                fila.appendChild(columna);
+                //columna.appendChild(imagen);
+            }
+
         }
-        
-      }
-      document.body.appendChild(tabla);
+        document.body.appendChild(tabla);
     }
 }
 
@@ -86,7 +88,7 @@ class JuegoMemoria extends Tablero {
         this.colocarImagenes();
         this.pintarTableroDOM();
     }
-    
+
     hacerParejas() {
 
         let imagenesSeleccionadasAnimales = 0;
@@ -117,9 +119,9 @@ class JuegoMemoria extends Tablero {
     }
     //Método para recibir las imágenes ya en pareja, y dar una posición desordenada pero sin que se repita.
     colocarImagenes(arrayParejas) {
-        
+
         arrayParejas = this.hacerParejas();
-        arrayParejas=this.desordenarArrays(arrayParejas);
+        arrayParejas = this.desordenarArrays(arrayParejas);
         let casilla = 0;
         //Metemos el array de la manera deseada, en parejas de forma aleatorias, y lo añadimos al tablero para sacar por pantalla.
         for (let i = 0; i < this.filasUsuario; i++) {
@@ -129,6 +131,41 @@ class JuegoMemoria extends Tablero {
             }
         }
     }
+    pintarTableroDOM() {
+        super.pintarTableroDOM();
+        let celda;
+
+        this.descubrir = this.descubrir.bind(this);
+
+        for (let i = 0; i < this.filasUsuario; i++) {
+            for (let j = 0; j < this.columnasUsuario; j++) {
+                celda = document.getElementById(`f${i}_c${j}`);
+                celda.addEventListener('click', this.descubrir);
+            }
+        }
+        console.log(this.arrayTablero);
+    }
+    descubrir(elEvento) {
+        let evento = elEvento || window.event;
+        let celda = evento.currentTarget;
+
+
+        this.descubrirImagen(celda);
+
+    }
+    descubrirImagen(celda) {
+
+        let fila = parseInt(celda.dataset.fila);
+        let columna = parseInt(celda.dataset.columna);
+
+
+
+        celda.innerHTML = this.arrayTablero[fila][columna];
+
+
+
+    }
+
 }
 //Declaramos el objeto para su utilización.
 let tableroNuevo = new JuegoMemoria();
