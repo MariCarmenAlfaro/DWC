@@ -59,17 +59,21 @@ class Tablero {
         let tabla = document.createElement('table');
         let fila;
         let columna;
+        let imagen;
         for (let i = 0; i < this.filasUsuario; i++) {
             fila = document.createElement('tr');
             tabla.appendChild(fila);
             for (let j = 0; j < this.columnasUsuario; j++) {
+                debugger
                 columna = document.createElement('td');
-                //imagen = document.createElement('img');
+                imagen = document.createElement('img');
                 columna.id = `f${i}_c${j}`;
                 columna.dataset.fila = i;
                 columna.dataset.columna = j;
                 fila.appendChild(columna);
-                //columna.appendChild(imagen);
+                columna.appendChild(imagen);
+                
+               
             }
 
         }
@@ -140,7 +144,7 @@ class JuegoMemoria extends Tablero {
         for (let i = 0; i < this.filasUsuario; i++) {
             for (let j = 0; j < this.columnasUsuario; j++) {
                 celda = document.getElementById(`f${i}_c${j}`);
-                celda.addEventListener('click', this.descubrir);
+                celda.addEventListener('contextmenu', this.descubrir);
             }
         }
         console.log(this.arrayTablero);
