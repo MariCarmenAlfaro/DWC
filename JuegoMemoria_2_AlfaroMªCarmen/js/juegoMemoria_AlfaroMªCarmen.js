@@ -6,7 +6,7 @@ class Tablero {
   constructor() {
     this.empezarJuego();
   }
-  empezarJuego(){
+  empezarJuego() {
     this.saberColumnasyFilas();
     this.calcularSiEsPar();
     this.crearTablero();
@@ -94,10 +94,6 @@ class JuegoMemoria extends Tablero {
   cartasGiradas = 0;
   numAciertos = 0;
   fechaInicio;
-  intento = 0;
-  puntos = 0;
-  coordenadasAnimalBuscado1;
-  coordenadasAnimalBuscado2;
 
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
@@ -189,11 +185,10 @@ class JuegoMemoria extends Tablero {
   }
   descubrirImagen(celda) {
     let tabla = document.getElementById("tabla");
-    if(this.cartasGiradas == 1){
+    if (this.cartasGiradas == 1) {
       tabla.className = "noClickable";
     }
     // hacer visible la carta
-
     let fila = parseInt(celda.dataset.fila);
     let columna = parseInt(celda.dataset.columna);
     celda.firstChild.className = "visible";
@@ -203,33 +198,22 @@ class JuegoMemoria extends Tablero {
     this.arrayImagenesDescubiertasFila.push(fila);
     this.arrayImagenesDescubiertasColumna.push(columna);
     this.cartasGiradas++;
-    this.intento++;
 
-    //Si tenemos dos cartas giradas comprobar que sean igual, dejarlas giradas y si no son iguales volver a voltear.
+    //Guardamos la carta 1 para usarla en un futuro
+    let carta1 = document.getElementById(
+      `f${this.arrayImagenesDescubiertasFila[0]}_c${this.arrayImagenesDescubiertasColumna[0]}`
+    );
 
-    let carta1 = document.getElementById(`f${this.arrayImagenesDescubiertasFila[0]}_c${this.arrayImagenesDescubiertasColumna[0]}`);
+    //miramos si tenemos dos cartas giradas para futuras comprobaciones.
     if (this.cartasGiradas == 2) {
-      
-      let carta2 = document.getElementById(`f${this.arrayImagenesDescubiertasFila[1]}_c${this.arrayImagenesDescubiertasColumna[1]}`);
+      // Guardamos la carta 2 para usarla en un futuro. Guardamos la carta dentro de este if para asegurarnos de que hay dos cartas
+      let carta2 = document.getElementById(
+        `f${this.arrayImagenesDescubiertasFila[1]}_c${this.arrayImagenesDescubiertasColumna[1]}`
+      );
 
-
-      console.log("intento " +this.intento);
+      // comprobar que las dos cartas sean igual, si son iguales las dejamos giradas y si no son iguales volver a voltear.
       if (carta1.firstChild.src == carta2.firstChild.src) {
-        console.log("dos cartas iguales")
-        console.log("animal buscado1" +this.coordenadasAnimalBuscado1);
-        console.log("animal buscado2" +this.coordenadasAnimalBuscado2);
-       
-        if(this.intento == 2){
-          this.puntos = this.puntos + 10;
-          console.log(this.puntos);
-        }
-        if(this.intento == 4){
-          this.puntos = this.puntos + 5;
-        }
-        if(this.intento == 8){
-          this.puntos = this.puntos + 2.5;
-        }
-        console.log(this.puntos);
+        //Son cartas iguales
         // alert("muy bien");
         this.numAciertos++;
         this.arrayImagenesDescubiertasFila = [];
@@ -237,6 +221,7 @@ class JuegoMemoria extends Tablero {
         this.cartasGiradas = 0;
         tabla.className = "clickable";
       } else {
+        //No son cartas iguales
         setTimeout(() => {
           carta1.firstChild.className = "ocult";
           carta2.firstChild.className = "ocult";
@@ -246,25 +231,15 @@ class JuegoMemoria extends Tablero {
           tabla.className = "clickable";
         }, 2000);
       }
-      //guardamos cartas coordenadas 2
-      this.coordenadasAnimalBuscado2 = `f${this.arrayImagenesDescubiertasFila[1]}_c${this.arrayImagenesDescubiertasColumna[1]}`;
     } else {
-      //TODO cambiar src por coordenadas
-      this.coordenadasAnimalBuscado1 = `f${this.arrayImagenesDescubiertasFila[0]}_c${this.arrayImagenesDescubiertasColumna[0]}`;
+      //Solo hay una carta girada
     }
-    console.log("si o si despues de girar 1 o 2")
-    console.log("animal buscado1" +this.coordenadasAnimalBuscado1);
-    console.log("animal buscado2" +this.coordenadasAnimalBuscado2);
 
+    //Comprobamos si el juego a terminado o no
     if (this.tamanyoTablero / 2 == this.numAciertos) {
       this.endGame();
     }
-
-    
-    
   }
-
- 
 
   endGame() {
     this.getTimePlay();
@@ -279,21 +254,17 @@ class JuegoMemoria extends Tablero {
         " segundos"
     );
   }
-
-   
-
 }
 
 //Declaramos el objeto para su utilización.
 let tableroNuevo = new JuegoMemoria();
 
 function reset() {
- 
-  if(confirm("tas seguro")){
-    console.log("borando datos... bin bop bip")
-   // TODO preguntar a la profesora como poder llamar a la funcion empezar juego si no se puede acceder a ell por estar en otro sitio
+  if (confirm("tas seguro")) {
+    console.log("borando datos... bin bop bip");
+    // TODO preguntar a la profesora como poder llamar a la funcion empezar juego si no se puede acceder a ell por estar en otro sitio
     //empezarJuego();
   }
-  
- // alert("hola");
- }
+
+  // alert("hola");
+}
