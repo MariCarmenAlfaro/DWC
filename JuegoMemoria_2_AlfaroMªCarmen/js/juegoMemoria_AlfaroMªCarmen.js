@@ -90,10 +90,13 @@ class JuegoMemoria extends Tablero {
   arrayImgsAleatorias = [];
   arrayImagenesDescubiertasFila = [];
   arrayImagenesDescubiertasColumna = [];
-
   cartasGiradas = 0;
   numAciertos = 0;
   fechaInicio;
+  intentos = 0;
+  puntos = 0;
+  cartaUsada1 = null;
+  cartaUsada2 = null;
 
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
@@ -184,6 +187,7 @@ class JuegoMemoria extends Tablero {
     this.descubrirImagen(celda);
   }
   descubrirImagen(celda) {
+    debugger;
     let tabla = document.getElementById("tabla");
     if (this.cartasGiradas == 1) {
       tabla.className = "noClickable";
@@ -192,7 +196,6 @@ class JuegoMemoria extends Tablero {
     let fila = parseInt(celda.dataset.fila);
     let columna = parseInt(celda.dataset.columna);
     celda.firstChild.className = "visible";
-    //celda.removeEventListener('contextmenu', this.descubrir);
 
     // guardar carta y comprobar si es igual
     this.arrayImagenesDescubiertasFila.push(fila);
@@ -206,6 +209,7 @@ class JuegoMemoria extends Tablero {
 
     //miramos si tenemos dos cartas giradas para futuras comprobaciones.
     if (this.cartasGiradas == 2) {
+      this.intentos++;
       // Guardamos la carta 2 para usarla en un futuro. Guardamos la carta dentro de este if para asegurarnos de que hay dos cartas
       let carta2 = document.getElementById(
         `f${this.arrayImagenesDescubiertasFila[1]}_c${this.arrayImagenesDescubiertasColumna[1]}`
@@ -215,11 +219,41 @@ class JuegoMemoria extends Tablero {
       if (carta1.firstChild.src == carta2.firstChild.src) {
         //Son cartas iguales
         // alert("muy bien");
+        carta1.removeEventListener("contextmenu", this.descubrir);
+        carta2.removeEventListener("contextmenu", this.descubrir);
+
         this.numAciertos++;
         this.arrayImagenesDescubiertasFila = [];
         this.arrayImagenesDescubiertasColumna = [];
         this.cartasGiradas = 0;
+
         tabla.className = "clickable";
+
+        if (
+          carta1.id == (this.cartaUsada1 || this.cartaUsada2) ||
+          carta2.id == (this.cartaUsada1 || this.cartaUsada2)
+        ) {
+          //Comprobamos si las nuevas cartas coinciden con las anteriores
+          if (this.intentos == 2) {
+            this.puntos = this.puntos + 5;
+          }
+          if (this.intentos == 3) {
+            this.puntos = this.puntos + 2.5;
+          }
+        } else {
+          if (
+            carta1.id != (this.cartaUsada1 && this.cartaUsada2) &&
+            carta2.id != (this.cartaUsada1 && this.cartaUsada2)
+          ) {
+            this.intentos = 1;
+          }
+
+          if (this.intentos == 1) {
+            this.puntos = this.puntos + 10;
+          }
+        }
+
+        this.intentos = 0;
       } else {
         //No son cartas iguales
         setTimeout(() => {
@@ -231,6 +265,8 @@ class JuegoMemoria extends Tablero {
           tabla.className = "clickable";
         }, 2000);
       }
+      this.cartaUsada1 = carta1.id;
+      this.cartaUsada2 = carta2.id;
     } else {
       //Solo hay una carta girada
     }
@@ -239,6 +275,7 @@ class JuegoMemoria extends Tablero {
     if (this.tamanyoTablero / 2 == this.numAciertos) {
       this.endGame();
     }
+    console.log(this.puntos);
   }
 
   endGame() {
@@ -251,7 +288,8 @@ class JuegoMemoria extends Tablero {
     alert(
       "Enhorabuena, has terminado en : " +
         (new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
-        " segundos"
+        " segundos, puntos obtenidos= " +
+        this.puntos
     );
   }
 }
