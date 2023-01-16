@@ -4,6 +4,9 @@
     box-sizing: border-box;
     width: 100%;
 }
+.body{
+    position: relative;
+}
 .titulo {
     color: rgb(255, 47, 182);
     text-shadow: 1px 2px black;
@@ -45,11 +48,24 @@ td,
     padding-top: 5px;
     
 }
-.ocult {
+#reset{
+    display: inline-block;
+    background-color: rgb(252, 236, 243);
+    padding: 10px;
+    border: 2px solid rgb(255, 47, 182);
+    font-weight: 700;
+    text-align: center;
+    color: rgb(255, 47, 182);
+    width: 150px;
+    position: absolute;
+    top: 2%;
+    right:  5%;
+}
+ .ocult {
     display: none;
 }
 
-.visible {
+ .visible{
     display: block;
 }
 .clickable {
