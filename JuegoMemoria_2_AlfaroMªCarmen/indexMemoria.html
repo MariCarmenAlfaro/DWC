@@ -7,24 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUEGO DE MEMORIA</title>
     <link rel="stylesheet" href="css/estilosMemoria.css">
+    
 
 </head>
 
 <body>
-    <div class="cuerpo">
+    <div id="cuerpo">
         <div id="encabezado">
             <h1 class="titulo">Juego de memoria</h1>
             <h2 class="autor">MªCarmen Alfaro Esparcia</h2>
         </div>
         
-        <script src="js/juegoMemoria_AlfaroMªCarmen.js"></script>
         
-        <!--<p class="puntuacion" >Puntuación total: </p></div>-->
-<form >
-    
-       <button onclick="this.funcionBorrar()" >Reiniciar juego</button>
-</form>
-    </div>
+        
+        <p class="puntuacion" >Puntuación total: <p id="puntuacion"></p></p>
+  </div> 
+    <!--<button onclick="reset()">Click me</button>-->
+
+  <script src="js/juegoMemoria_AlfaroMªCarmen.js"></script>
+   <p id="tiempo"></p>
+
 </body>
 
 </html>
