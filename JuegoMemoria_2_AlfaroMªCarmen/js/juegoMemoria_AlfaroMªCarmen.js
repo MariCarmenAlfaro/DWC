@@ -97,13 +97,14 @@ class JuegoMemoria extends Tablero {
   puntos = 0;
   cartaUsada1 = null;
   cartaUsada2 = null;
-
+  cuerpo = document.getElementById("cuerpo");
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
     super();
     this.hacerParejas();
     this.colocarImagenes();
     this.pintarTableroDOM();
+    
   }
 
   hacerParejas() {
@@ -176,6 +177,7 @@ class JuegoMemoria extends Tablero {
     }
     console.log(this.arrayTablero);
     this.fechaInicio = new Date();
+
   }
   descubrir(elEvento) {
     let evento = elEvento || window.event;
@@ -197,12 +199,12 @@ class JuegoMemoria extends Tablero {
     let columna = parseInt(celda.dataset.columna);
     celda.firstChild.className = "visible";
 
-    // guardar carta y comprobar si es igual
+    // Guardar la posicion dentro del array
     this.arrayImagenesDescubiertasFila.push(fila);
     this.arrayImagenesDescubiertasColumna.push(columna);
     this.cartasGiradas++;
 
-    //Guardamos la carta 1 para usarla en un futuro
+    //Guardamos la posicion de carta 1 para usarla en un futuro
     let carta1 = document.getElementById(
       `f${this.arrayImagenesDescubiertasFila[0]}_c${this.arrayImagenesDescubiertasColumna[0]}`
     );
@@ -218,7 +220,6 @@ class JuegoMemoria extends Tablero {
       // comprobar que las dos cartas sean igual, si son iguales las dejamos giradas y si no son iguales volver a voltear.
       if (carta1.firstChild.src == carta2.firstChild.src) {
         //Son cartas iguales
-        // alert("muy bien");
         carta1.removeEventListener("contextmenu", this.descubrir);
         carta2.removeEventListener("contextmenu", this.descubrir);
 
@@ -228,12 +229,11 @@ class JuegoMemoria extends Tablero {
         this.cartasGiradas = 0;
 
         tabla.className = "clickable";
-
+        //Comprobamos si las nuevas cartas coinciden con las anteriores
         if (
           carta1.id == (this.cartaUsada1 || this.cartaUsada2) ||
           carta2.id == (this.cartaUsada1 || this.cartaUsada2)
         ) {
-          //Comprobamos si las nuevas cartas coinciden con las anteriores
           if (this.intentos == 2) {
             this.puntos = this.puntos + 5;
           }
@@ -275,9 +275,13 @@ class JuegoMemoria extends Tablero {
     if (this.tamanyoTablero / 2 == this.numAciertos) {
       this.endGame();
     }
+    let totalPuntos = (this.tamanyoTablero / 2) * 10;
+    let puntuacion = document.getElementById("puntuacion");
+    puntuacion.innerHTML = this.puntos + "/" + totalPuntos;
+   
     console.log(this.puntos);
   }
-
+ 
   endGame() {
     this.getTimePlay();
     let tabla = document.getElementById("tabla");
@@ -285,12 +289,11 @@ class JuegoMemoria extends Tablero {
   }
 
   getTimePlay() {
-    alert(
-      "Enhorabuena, has terminado en : " +
-        (new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
-        " segundos, puntos obtenidos= " +
-        this.puntos
-    );
+    let tiempo = document.getElementById("tiempo");
+    tiempo.innerHTML =
+      "Enhorabuena!!! Has terminado en : " +
+      (new Date().getTime() - this.fechaInicio.getTime()) / 1000 +" segundos.";
+    cuerpo.appendChild(tiempo);
   }
 }
 
