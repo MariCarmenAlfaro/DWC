@@ -95,6 +95,7 @@ class JuegoMemoria extends Tablero {
   cartaUsada2 = null;
   cuerpo = document.getElementById("cuerpo");
   totalPuntos = 0;
+  tabla;
   puntuacion = document.getElementById("puntuacion");
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
@@ -171,9 +172,9 @@ class JuegoMemoria extends Tablero {
         celda = document.getElementById(`f${i}_c${j}`);
         celda.addEventListener("contextmenu", this.descubrir);
         //TODO mirar que se abran todas al inicio
-        //  celda.firstChild.id = "visible";
-        // setTimeout(() => {
-        //     celda.firstChild.id = "ocult";
+        // celda.firstChild.id = "visible";
+        //  setTimeout(() => {
+        //    celda.firstChild.id = "ocult";
         // }, 2000);
       }
     }
@@ -185,7 +186,20 @@ class JuegoMemoria extends Tablero {
     this.reset = this.reset.bind(this);
     resetTable.addEventListener("click", this.reset);
 
-    this.fechaInicio = new Date();
+    //TODO añadir a tabla clase mostrarTodo
+    this.tabla = document.getElementById("tabla");
+    this.tabla.className="mostrarTodo";
+    
+    setTimeout(() => {
+      this.tabla.className="";
+       this.fechaInicio = new Date();
+       console.log(this.fechaInicio);
+    console.log(this.tiempo);
+    }, 2000);
+   
+    console.log(this.fechaInicio);
+    console.log(this.tiempo);
+    //TODO poner temporizador para quitar clase mostrarTodo
   }
   descubrir(elEvento) {
     let evento = elEvento || window.event;
@@ -198,9 +212,9 @@ class JuegoMemoria extends Tablero {
   }
   descubrirImagen(celda) {
     debugger;
-    let tabla = document.getElementById("tabla");
+    this.tabla = document.getElementById("tabla");
     if (this.cartasGiradas == 1) {
-      tabla.className = "noClickable";
+      this.tabla.className = "noClickable";
     }
     // hacer visible la carta
     let fila = parseInt(celda.dataset.fila);
@@ -236,7 +250,7 @@ class JuegoMemoria extends Tablero {
         this.arrayImagenesDescubiertasColumna = [];
         this.cartasGiradas = 0;
 
-        tabla.className = "clickable";
+        this.tabla.className = "clickable";
         //Comprobamos si las nuevas cartas coinciden con las anteriores
         if (
           carta1.id == this.cartaUsada1 ||
@@ -275,7 +289,7 @@ class JuegoMemoria extends Tablero {
           this.arrayImagenesDescubiertasFila = [];
           this.arrayImagenesDescubiertasColumna = [];
           this.cartasGiradas = 0;
-          tabla.className = "clickable";
+          this.tabla.className = "clickable";
         }, 2000);
       }
       this.cartaUsada1 = carta1.id;
@@ -295,8 +309,8 @@ class JuegoMemoria extends Tablero {
 
   endGame() {
     this.getTimePlay();
-    let tabla = document.getElementById("tabla");
-    tabla.className = "noClickable";
+
+    this.tabla.className = "noClickable";
   }
 
   getTimePlay() {
@@ -310,7 +324,7 @@ class JuegoMemoria extends Tablero {
 
   reset() {
     if (confirm("¿Desea reiniciar la partida?")) {
-      tabla.remove();
+      this.tabla.remove();
       this.pintarTableroDOM();
     }
   }
