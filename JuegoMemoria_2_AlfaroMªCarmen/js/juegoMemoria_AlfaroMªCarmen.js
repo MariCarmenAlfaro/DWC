@@ -195,7 +195,7 @@ class JuegoMemoria extends Tablero {
        this.fechaInicio = new Date();
        console.log(this.fechaInicio);
     console.log(this.tiempo);
-    }, 2000);
+    }, 1500);
    
     console.log(this.fechaInicio);
     console.log(this.tiempo);
@@ -316,9 +316,9 @@ class JuegoMemoria extends Tablero {
   getTimePlay() {
     let tiempo = document.getElementById("tiempo");
     tiempo.innerHTML =
-      "Enhorabuena!!! Has terminado en : " +
+      "<p class='ganador'>¡¡¡ENHORABUENA!!!<br> Has terminado la partida en : " +
       (new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
-      " segundos.";
+      " segundos. <br> ¡¡Has ganado con "+this.puntos+ " puntos de "+this.totalPuntos+"!!</p>";
     cuerpo.appendChild(tiempo);
   }
 
