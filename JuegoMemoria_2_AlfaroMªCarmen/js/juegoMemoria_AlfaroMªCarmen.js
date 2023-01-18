@@ -171,11 +171,7 @@ class JuegoMemoria extends Tablero {
       for (let j = 0; j < this.columnasUsuario; j++) {
         celda = document.getElementById(`f${i}_c${j}`);
         celda.addEventListener("contextmenu", this.descubrir);
-        //TODO mirar que se abran todas al inicio
-        // celda.firstChild.id = "visible";
-        //  setTimeout(() => {
-        //    celda.firstChild.id = "ocult";
-        // }, 2000);
+    
       }
     }
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
@@ -300,20 +296,20 @@ class JuegoMemoria extends Tablero {
 
     //Comprobamos si el juego a terminado o no
     if (this.tamanyoTablero / 2 == this.numAciertos) {
-      this.endGame();
+      this.finJuego();
     }
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
     puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
     console.log(this.puntos);
   }
 
-  endGame() {
-    this.getTimePlay();
+  finJuego() {
+    this.comienzoTiempo();
 
     this.tabla.className = "noClickable";
   }
 
-  getTimePlay() {
+  comienzoTiempo() {
     let tiempo = document.getElementById("tiempo");
     tiempo.innerHTML =
       "<p class='ganador'>¡¡¡ENHORABUENA!!!<br> Has terminado la partida en : " +
