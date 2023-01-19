@@ -319,8 +319,8 @@ class JuegoMemoria extends Tablero {
     let tiempo = document.getElementById("tiempo");
     tiempo.innerHTML =
       "<p class='ganador'>¡¡¡ENHORABUENA!!!<br> Has terminado la partida en : " +
-      parseInt(new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
-      " segundos. <br> ¡¡Has ganado con " +
+      parseInt((new Date().getTime() - this.fechaInicio.getTime()) / 1000) +
+      " segundo/s. <br> ¡¡Has ganado con " +
       this.puntos +
       " puntos de " +
       this.totalPuntos +
