@@ -4,6 +4,9 @@ class Tablero {
   filasUsuario = "";
   columnasUsuario = "";
   constructor() {
+    this.juegoDesdeCero();
+  }
+  juegoDesdeCero() {
     this.saberColumnasyFilas();
     this.calcularSiEsPar();
     this.crearTablero();
@@ -25,9 +28,24 @@ class Tablero {
         alert("El tablero debe ser par.");
         this.saberColumnasyFilas();
       }
+      this.tableroCorrecto();
     }
   }
-
+  tableroCorrecto() {
+    if (this.filasUsuario == 0 || this.columnasUsuario == 0) {
+      alert("¡No puedes introducir el número 0!");
+      this.saberColumnasyFilas();
+      this.tableroCorrecto();
+    }
+    if (
+      (this.filasUsuario == 1 && this.columnasUsuario == 2) ||
+      (this.filasUsuario == 2 && this.columnasUsuario == 1)
+    ) {
+      alert("Tu tablero debe tener más de una pareja");
+      this.saberColumnasyFilas();
+      this.tableroCorrecto();
+    }
+  }
   //Creamos el tablero
   crearTablero() {
     this.arrayTablero = [];
@@ -100,11 +118,13 @@ class JuegoMemoria extends Tablero {
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
     super();
+    this.juegoDeCero();
+  }
+  juegoDeCero() {
     this.hacerParejas();
     this.colocarImagenes();
     this.pintarTableroDOM();
   }
-
   hacerParejas() {
     let imagenesSeleccionadasAnimales = 0;
     let arrayImagenes = [
@@ -171,7 +191,6 @@ class JuegoMemoria extends Tablero {
       for (let j = 0; j < this.columnasUsuario; j++) {
         celda = document.getElementById(`f${i}_c${j}`);
         celda.addEventListener("contextmenu", this.descubrir);
-    
       }
     }
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
@@ -184,18 +203,12 @@ class JuegoMemoria extends Tablero {
 
     //TODO añadir a tabla clase mostrarTodo
     this.tabla = document.getElementById("tabla");
-    this.tabla.className="mostrarTodo";
-    
+    this.tabla.className = "mostrarTodo";
+
     setTimeout(() => {
-      this.tabla.className="";
-       this.fechaInicio = new Date();
-       console.log(this.fechaInicio);
-    console.log(this.tiempo);
+      this.tabla.className = "";
+      this.fechaInicio = new Date();
     }, 1500);
-   
-    console.log(this.fechaInicio);
-    console.log(this.tiempo);
-    //TODO poner temporizador para quitar clase mostrarTodo
   }
   descubrir(elEvento) {
     let evento = elEvento || window.event;
@@ -207,7 +220,6 @@ class JuegoMemoria extends Tablero {
     this.descubrirImagen(celda);
   }
   descubrirImagen(celda) {
-    debugger;
     this.tabla = document.getElementById("tabla");
     if (this.cartasGiradas == 1) {
       this.tabla.className = "noClickable";
@@ -253,9 +265,6 @@ class JuegoMemoria extends Tablero {
           carta1.id == this.cartaUsada2 ||
           carta2.id == this.cartaUsada1 ||
           carta2.id == this.cartaUsada2
-
-          // carta1.id == (this.cartaUsada1 || this.cartaUsada2) ||
-          //  carta2.id == (this.cartaUsada1 || this.cartaUsada2)
         ) {
           if (this.intentos == 2) {
             this.puntos = this.puntos + 5;
@@ -300,28 +309,25 @@ class JuegoMemoria extends Tablero {
     }
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
     puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
-    console.log(this.puntos);
   }
-
+  //Finaliza el juego y calcula el tiempo que se ha tardado, los puntos obtenidos y muestra mensaje con los resultados
   finJuego() {
-    this.comienzoTiempo();
-
-    this.tabla.className = "noClickable";
-  }
-
-  comienzoTiempo() {
     let tiempo = document.getElementById("tiempo");
     tiempo.innerHTML =
       "<p class='ganador'>¡¡¡ENHORABUENA!!!<br> Has terminado la partida en : " +
-      (new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
-      " segundos. <br> ¡¡Has ganado con "+this.puntos+ " puntos de "+this.totalPuntos+"!!</p>";
+      parseInt(new Date().getTime() - this.fechaInicio.getTime()) / 1000 +
+      " segundos. <br> ¡¡Has ganado con " +
+      this.puntos +
+      " puntos de " +
+      this.totalPuntos +
+      "!!</p>";
     cuerpo.appendChild(tiempo);
   }
 
+  //Método para reiniciar el juego
   reset() {
     if (confirm("¿Desea reiniciar la partida?")) {
-      this.tabla.remove();
-      this.pintarTableroDOM();
+      location.reload();
     }
   }
 }
