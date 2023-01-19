@@ -197,9 +197,9 @@ class JuegoMemoria extends Tablero {
     puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
 
     console.log(this.arrayTablero);
-    let resetTable = document.getElementById("reset");
-    this.reset = this.reset.bind(this);
-    resetTable.addEventListener("click", this.reset);
+    let resetTable = document.getElementById("reiniciarJuego");
+    this.reiniciarJuego = this.reiniciarJuego.bind(this);
+    resetTable.addEventListener("click", this.reiniciarJuego);
 
     //TODO añadir a tabla clase mostrarTodo
     this.tabla = document.getElementById("tabla");
@@ -239,10 +239,22 @@ class JuegoMemoria extends Tablero {
       `f${this.arrayImagenesDescubiertasFila[0]}_c${this.arrayImagenesDescubiertasColumna[0]}`
     );
 
-    //miramos si tenemos dos cartas giradas para futuras comprobaciones.
+    //Miramos si tenemos dos cartas giradas para futuras comprobaciones.
+    this.comprobarNumeroDecartasGiradas(carta1); 
+
+    //Comprobamos si el juego a terminado o no
+    if (this.tamanyoTablero / 2 == this.numAciertos) {
+      this.finJuego();
+    }
+    this.totalPuntos = (this.tamanyoTablero / 2) * 10;
+    puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
+  }
+
+  //Método que comprueba el numero de cartas giradas
+  comprobarNumeroDecartasGiradas(carta1) {
     if (this.cartasGiradas == 2) {
       this.intentos++;
-      // Guardamos la carta 2 para usarla en un futuro. Guardamos la carta dentro de este if para asegurarnos de que hay dos cartas
+      // Guardamos la carta 2 para usarla en un futuro. Guardamos la carta dentro de este condicional para asegurarnos de que hay dos cartas
       let carta2 = document.getElementById(
         `f${this.arrayImagenesDescubiertasFila[1]}_c${this.arrayImagenesDescubiertasColumna[1]}`
       );
@@ -257,35 +269,12 @@ class JuegoMemoria extends Tablero {
         this.arrayImagenesDescubiertasFila = [];
         this.arrayImagenesDescubiertasColumna = [];
         this.cartasGiradas = 0;
-
         this.tabla.className = "clickable";
-        //Comprobamos si las nuevas cartas coinciden con las anteriores
-        if (
-          carta1.id == this.cartaUsada1 ||
-          carta1.id == this.cartaUsada2 ||
-          carta2.id == this.cartaUsada1 ||
-          carta2.id == this.cartaUsada2
-        ) {
-          if (this.intentos == 2) {
-            this.puntos = this.puntos + 5;
-          }
-          if (this.intentos == 3) {
-            this.puntos = this.puntos + 2.5;
-          }
-        } else {
-          if (
-            carta1.id != (this.cartaUsada1 && this.cartaUsada2) &&
-            carta2.id != (this.cartaUsada1 && this.cartaUsada2)
-          ) {
-            this.intentos = 1;
-          }
 
-          if (this.intentos == 1) {
-            this.puntos = this.puntos + 10;
-          }
-        }
-
+        //Comprobamos si las nuevas cartas coinciden con las anteriores y asignamos puntos correspondientes
+        this.comprobacionCartasYAsignacionPuntos(carta1, carta2);
         this.intentos = 0;
+
       } else {
         //No son cartas iguales
         setTimeout(() => {
@@ -299,17 +288,32 @@ class JuegoMemoria extends Tablero {
       }
       this.cartaUsada1 = carta1.id;
       this.cartaUsada2 = carta2.id;
-    } else {
-      //Solo hay una carta girada
     }
-
-    //Comprobamos si el juego a terminado o no
-    if (this.tamanyoTablero / 2 == this.numAciertos) {
-      this.finJuego();
-    }
-    this.totalPuntos = (this.tamanyoTablero / 2) * 10;
-    puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
   }
+
+  comprobacionCartasYAsignacionPuntos(carta1, carta2) {
+    if (carta1.id == this.cartaUsada1 ||
+      carta1.id == this.cartaUsada2 ||
+      carta2.id == this.cartaUsada1 ||
+      carta2.id == this.cartaUsada2) {
+      if (this.intentos == 2) {
+        this.puntos = this.puntos + 5;
+      }
+      if (this.intentos == 3) {
+        this.puntos = this.puntos + 2.5;
+      }
+    } else {
+      if (carta1.id != (this.cartaUsada1 && this.cartaUsada2) &&
+        carta2.id != (this.cartaUsada1 && this.cartaUsada2)) {
+        this.intentos = 1;
+      }
+
+      if (this.intentos == 1) {
+        this.puntos = this.puntos + 10;
+      }
+    }
+  }
+
   //Finaliza el juego y calcula el tiempo que se ha tardado, los puntos obtenidos y muestra mensaje con los resultados
   finJuego() {
     let tiempo = document.getElementById("tiempo");
@@ -325,7 +329,7 @@ class JuegoMemoria extends Tablero {
   }
 
   //Método para reiniciar el juego
-  reset() {
+  reiniciarJuego() {
     if (confirm("¿Desea reiniciar la partida?")) {
       location.reload();
     }
