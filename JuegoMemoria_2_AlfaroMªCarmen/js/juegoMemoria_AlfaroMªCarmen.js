@@ -4,13 +4,11 @@ class Tablero {
   filasUsuario = "";
   columnasUsuario = "";
   constructor() {
-    this.juegoDesdeCero();
-  }
-  juegoDesdeCero() {
     this.saberColumnasyFilas();
     this.calcularSiEsPar();
     this.crearTablero();
   }
+
   //Método para preguntar al usuario las filas y columnas que desee para formar el tablero
   saberColumnasyFilas() {
     alert("¡VAMOS A JUGAR!");
@@ -31,6 +29,7 @@ class Tablero {
       this.tableroCorrecto();
     }
   }
+  //Se comprueba que los datos introducidos son correctos para el funcionamiento correcto del juego.
   tableroCorrecto() {
     if (this.filasUsuario == 0 || this.columnasUsuario == 0) {
       alert("¡No puedes introducir el número 0!");
@@ -118,13 +117,11 @@ class JuegoMemoria extends Tablero {
   tamanyoTablero = this.filasUsuario * this.columnasUsuario;
   constructor() {
     super();
-    this.juegoDeCero();
-  }
-  juegoDeCero() {
     this.hacerParejas();
     this.colocarImagenes();
     this.pintarTableroDOM();
   }
+//Método donde sea realizan las parejas entre cartas.
   hacerParejas() {
     let imagenesSeleccionadasAnimales = 0;
     let arrayImagenes = [
@@ -181,6 +178,7 @@ class JuegoMemoria extends Tablero {
       }
     }
   }
+  //Método que pinta el tablero con los datos y poder añadir los eventos
   pintarTableroDOM() {
     super.pintarTableroDOM();
     let celda;
@@ -193,23 +191,26 @@ class JuegoMemoria extends Tablero {
         celda.addEventListener("contextmenu", this.descubrir);
       }
     }
+    //Puntos totales al prinipio del juego.
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
     puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
 
-    console.log(this.arrayTablero);
+    //Declaración del del evento para reiniciar el juego.
     let resetTable = document.getElementById("reiniciarJuego");
     this.reiniciarJuego = this.reiniciarJuego.bind(this);
     resetTable.addEventListener("click", this.reiniciarJuego);
 
-    //TODO añadir a tabla clase mostrarTodo
+    //Muestra todas las cartas al iniciar el juego.
     this.tabla = document.getElementById("tabla");
     this.tabla.className = "mostrarTodo";
 
+    //Control del tiempo en la cual aparecen las imagenes y comienzo del contador de la fecha de inicio.
     setTimeout(() => {
       this.tabla.className = "";
       this.fechaInicio = new Date();
     }, 1500);
   }
+  //Manejador del evento.
   descubrir(elEvento) {
     let evento = elEvento || window.event;
     let celda = evento.currentTarget;
@@ -219,6 +220,7 @@ class JuegoMemoria extends Tablero {
     };
     this.descubrirImagen(celda);
   }
+  //Acción que ejecuta el evento.
   descubrirImagen(celda) {
     this.tabla = document.getElementById("tabla");
     if (this.cartasGiradas == 1) {
@@ -240,17 +242,20 @@ class JuegoMemoria extends Tablero {
     );
 
     //Miramos si tenemos dos cartas giradas para futuras comprobaciones.
-    this.comprobarNumeroDecartasGiradas(carta1); 
+    this.comprobarNumeroDecartasGiradas(carta1);
 
-    //Comprobamos si el juego a terminado o no
+    //Comprobamos si el juego a terminado o no.
     if (this.tamanyoTablero / 2 == this.numAciertos) {
       this.finJuego();
     }
+    //Puntos totales y los que se van obteniendo, actualizandose.
     this.totalPuntos = (this.tamanyoTablero / 2) * 10;
     puntuacion.innerHTML = this.puntos + "/" + this.totalPuntos;
   }
 
-  //Método que comprueba el numero de cartas giradas
+  //Método donde se comprueban si las cartas seleccionadas son una pareja y si lo son,
+  //se condiciona a si son iguales entre ellas o no, si lo son se dejan visibles, si no lo son, 
+  //se visibilizan con un temporizador y luego se ocultan de nuevo para seguir jugando.
   comprobarNumeroDecartasGiradas(carta1) {
     if (this.cartasGiradas == 2) {
       this.intentos++;
@@ -290,8 +295,10 @@ class JuegoMemoria extends Tablero {
       this.cartaUsada2 = carta2.id;
     }
   }
-
+//Método  donde se comprueban si las nuevas cartas seleccionadas son igual a las que habia ya elegido
+// y así poder adjudicar los puntos correspondientes en base los intentos que lleve con las mismas cartas.
   comprobacionCartasYAsignacionPuntos(carta1, carta2) {
+    //Si son iguales las imagenes seleccionadas nuevamente
     if (carta1.id == this.cartaUsada1 ||
       carta1.id == this.cartaUsada2 ||
       carta2.id == this.cartaUsada1 ||
@@ -303,6 +310,7 @@ class JuegoMemoria extends Tablero {
         this.puntos = this.puntos + 2.5;
       }
     } else {
+      //Ninguna carta coincide 
       if (carta1.id != (this.cartaUsada1 && this.cartaUsada2) &&
         carta2.id != (this.cartaUsada1 && this.cartaUsada2)) {
         this.intentos = 1;
@@ -314,7 +322,7 @@ class JuegoMemoria extends Tablero {
     }
   }
 
-  //Finaliza el juego y calcula el tiempo que se ha tardado, los puntos obtenidos y muestra mensaje con los resultados
+  //Finaliza el juego y calcula el tiempo que se ha tardado y muestra mensaje con los resultados de tiempototal y puntos obtenidos.
   finJuego() {
     let tiempo = document.getElementById("tiempo");
     tiempo.innerHTML =
