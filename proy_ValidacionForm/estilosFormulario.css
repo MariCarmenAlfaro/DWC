@@ -1,0 +1,37 @@
+*{
+    font-family: sans-serif;
+}
+.formularioContainer{
+    width: 350px;
+    margin: auto;
+}
+.textoForm{
+    display: block;
+    margin: 1%;
+    font-weight: 500;
+    color: rgb(161, 161, 161);
+}
+input{
+    width: 350px;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+.verde{
+    width: 350px;
+    border-radius: 5px;
+    border: 1px solid green;
+}
+h1{
+    text-align: center;
+    font-weight: 600;
+}
+.botonEnviar{
+    padding: 3%;
+    margin: 2%;
+    width: 350px;
+    color: white;
+    font-size: larger;
+    font-weight: 500;
+    border: 0;
+    background-color: rgb(210, 210, 210);
+}
