@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plantaEnvasado>
+
+    <contenedorGrande>
+        <envaseGrandeAncho>
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envaseGrandeAncho>
+    </contenedorGrande>
+
+
+    <contenedorMediano>
+        <envaseMedianoAncho>
+            <liquido tipo="substanciaCorrosiva">Lejía</liquido>
+            <liquido tipo="substanciaCorrosiva">Amoniaco</liquido>
+            <liquido tipo="substanciaCorrosiva">Jabón</liquido>
+            <liquido tipo="substanciaCorrosiva">Aguarrás</liquido>
+            <liquido tipo="substanciaCorrosiva">Alcohol</liquido>
+            <liquido tipo="substanciaCorrosiva">Gasolina</liquido>
+        </envaseMedianoAncho>
+    </contenedorMediano>
+
+    <contenedorVertical>
+        <envaseGrandeAlto>
+            <liquido tipo="alimento">Agua</liquido>
+            <liquido tipo="alimento">Leche</liquido>
+            <liquido tipo="alimento">Aceite</liquido>
+            <liquido tipo="alimento">Vinagre</liquido>
+        </envaseGrandeAlto>
+
+
+        <envaseMedianoAlto>
+            <liquido tipo="substanciaCorrosiva">Lejía</liquido>
+            <liquido tipo="substanciaCorrosiva">Amoniaco</liquido>
+            <liquido tipo="substanciaCorrosiva">Jabón</liquido>
+            <liquido tipo="substanciaCorrosiva">Aguarrás</liquido>
+            <liquido tipo="substanciaCorrosiva">Alcohol</liquido>
+            <liquido tipo="substanciaCorrosiva">Gasolina</liquido>
+        </envaseMedianoAlto>
+
+
+        <envasePequeño>
+            <liquido tipo="substanciaCorrosiva">Lejía</liquido>
+            <liquido tipo="substanciaCorrosiva">Amoniaco</liquido>
+            <liquido tipo="substanciaCorrosiva">Jabón</liquido>
+            <liquido tipo="substanciaCorrosiva">Aguarrás</liquido>
+            <liquido tipo="substanciaCorrosiva">Alcohol</liquido>
+            <liquido tipo="substanciaCorrosiva">Gasolina</liquido>
+        </envasePequeño>
+    </contenedorVertical>
+
+</plantaEnvasado>
