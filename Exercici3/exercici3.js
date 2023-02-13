@@ -1,13 +1,24 @@
-let texto = prompt('Dime el texto que deseas');
-let numeroTxt=prompt('Numero que desees que esté');
-
-if(parseInt( numeroTxt)<1 &&parseInt( numeroTxt)>10){
-    alert("El número debe ser entre 1 y 10");
+let texto = prompt("Dime el texto que deseas");
+let numeroTxt;
+let numeroLista;
+datos();
+function datos() {
+  numeroTxt = prompt("Numero que desees que esté");
+  numeroLista = parseInt(numeroTxt);
 }
-debugger
-let lista = document.getElementsByTagName('ol');
-let textoNuevo=document.createElement('li');
-textoNuevo.innerHTML=texto;
 
-console.log(textoNuevo);
+debugger;
+if (numeroLista <= 1 || numeroLista >= 10) {
+  alert("El número debe ser entre 1 y 10");
+  datos();
+}
+debugger;
 
+
+let olLista = document.getElementsByTagName("ol")[0];
+let lista = document.getElementsByTagName("li")[numeroTxt -1];
+let listadoNuevo = document.createElement("li");
+
+listadoNuevo.innerHTML = texto;
+
+olLista.insertBefore(listadoNuevo, lista);

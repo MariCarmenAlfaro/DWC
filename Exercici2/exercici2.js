@@ -6,6 +6,7 @@
        if(boton.textContent==='Ocultar'){
         boton.innerHTML="Mostrar";
         parrafo.className="ocult";
+        
        } else if(boton.textContent==='Mostrar'){
         boton.innerHTML="Ocultar";
         parrafo.className="visible";
